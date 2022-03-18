@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Человеки вид сверху</title>
+<script type="text/javascript">
+
+Coords = [
+	[550, 240],
+	[600, 294],
+	[430, 580],
+	[760, 170],
+	[1500, 500],
+	[860, 700],
+	[1660, 170]
+];
+
+function Rectangle( X,Y,DX,DY, R1,G1,B1, R2,G2,B2){
+	var canvas = document.getElementById('Image1');
+	var Image1Canvas = canvas.getContext('2d');
+	Image1Canvas.beginPath();
+	Image1Canvas.fillStyle = 'rgb('+R1+', '+G1+', '+B1+')';
+	Image1Canvas.fillRect(X,Y,DX,DY);
+	Image1Canvas.lineWidth = 1;
+	Image1Canvas.strokeStyle = 'rgb('+R2+', '+G2+', '+B2+')';
+	Image1Canvas.strokeRect(X,Y,DX,DY);
+	Image1Canvas.stroke();
+	};
+
+function Button1Click(){   
+
+	};
+
+function Steni(){
+	
+	Rectangle(50,860,1800,100, 112,80,46, 112,80,46);
+	Rectangle(1800,0,110,960, 112,80,46, 112,80,46);
+	Rectangle(50,0,1800,100, 112,80,46, 112,80,46);
+
+	Rectangle(50,0,110,350, 112,80,46, 112,80,46);
+	Rectangle(50,550,110,960, 112,80,46, 112,80,46);
+
+	Rectangle(0,350,160,50, 112,80,46, 112,80,46);
+	Rectangle(0,500,160,50, 112,80,46, 112,80,46);
+	};
+
+function Pol(){
+	Rectangle(160,100,1640,760, 179, 179, 255, 179, 179, 255);
+	Rectangle(0,400,160,100, 179, 179, 255, 179, 179, 255);
+	};
+
+ function FormCreate(){
+	Steni();
+	Pol();
+	Timer1Timer();
+	};
+
+function Timer1Timer(){
+	var X, Y, xStart, xEnd, yStart, yEnd;
+	for (var i = 0; i < Coords.length; i++){
+		X = - 25 + 50 * Math.random();
+		Y = - 25 + 50 * Math.random();
+		for (var k = 0; k < Coords.length; k++){
+			xStart = Coords[k][0];
+			xEnd = Coords[k][0] + 50;
+			yStart = Coords[k][1];
+			yEnd = Coords[k][1] + 54;
+			if ((xStart > X > xEnd && yStart > Y > yEnd) || (xStart > X + 50 > xEnd && yStart > Y + 54 > yEnd)){
+				console.log("СТОЛКНОВЕНИЕ");
+			}
+		}
+		Coords[i][0] = Coords[i][0] + X;
+		Coords[i][1] = Coords[i][1] + Y;
+		document.getElementById('Chuvak' + i).style.left = Coords[i][0] + 'px';
+		document.getElementById('Chuvak' + i).style.top = Coords[i][1]  + 'px' ;
+	};
+	setTimeout('Timer1Timer()', 100);
+};
+
+</script>
+</head>
+<body onload="FormCreate()">
+
+	<canvas id="Image1" width="1900" height="960"></canvas>
+	<img id='Chuvak0' src="img/chell_s_pistolem.gif" style="position: absolute; left: 550px;  top: 240px; width: 50px; height: 54px">
+	<img id='Chuvak1' src="img/zombie.gif" style="position: absolute; left: 550px; top: 240px; width: 50px;">
+	<img id='Chuvak2' src="img/chell_s_pistolem.gif" style="position: absolute; left: 430px;  top: 580px; width: 50px; height: 54px">
+	<img id='Chuvak3' src="img/zombie.gif" style="position: absolute; left: 760px;  top: 170px; width: 50px;">
+	<img id='Chuvak4' src="img/zombie.gif" style="position: absolute; left: 1500px; top: 500px; width: 50px;"> 
+	<img id='Chuvak5' src="img/zombie.gif" style="position: absolute; left: 860px;  top: 700px; width: 50px;"> 
+	<img id='Chuvak6' src="img/zombie.gif" style="position: absolute; left: 1660px; top: 170px; width: 50px;">                    
+	<!-- <input id="Button1" type="button" value="OK" onclick="Button1Click()" style="position:absolute; left:20px; top:20px; width:50px; height:30px;" > -->
+
+</body>
+</html>
