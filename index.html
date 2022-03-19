@@ -7,7 +7,7 @@
 
 Coords = [
 	[550, 240],
-	[600, 240],
+	[600, 420],
 	[430, 580],
 	[760, 170],
 	[1500, 500],
@@ -33,20 +33,20 @@ function Button1Click(){
 
 function walls(){
 	
-	Rectangle(50,860,1800,100, 112,80,46, 112,80,46);
-	Rectangle(1800,0,110,960, 112,80,46, 112,80,46);
-	Rectangle(50,0,1800,100, 112,80,46, 112,80,46);
+	Rectangle(50,860,1800,100, 112,80,46, 112,80,46); // Нижняя
+	Rectangle(1800,0,110,960, 112,80,46, 112,80,46); // Правая
+	Rectangle(50,0,1800,100, 112,80,46, 112,80,46); // Верхняя
 
-	Rectangle(50,0,110,350, 112,80,46, 112,80,46);
-	Rectangle(50,550,110,960, 112,80,46, 112,80,46);
+	Rectangle(50,0,110,350, 112,80,46, 112,80,46); // Левая верхняя
+	Rectangle(50,550,110,350, 112,80,46, 112,80,46); // Левая нижняя
 
 	Rectangle(0,350,160,50, 112,80,46, 112,80,46);
 	Rectangle(0,500,160,50, 112,80,46, 112,80,46);
 	};
 
 function floor(){
-	Rectangle(160,100,1640,760, 179, 179, 255, 179, 179, 255);
-	Rectangle(0,400,160,100, 179, 179, 255, 179, 179, 255);
+	Rectangle(160,100,1640,760, 179,179,255, 179,179,255);
+	Rectangle(0,400,160,100, 179,179,255, 179,179,255);
 	};
 
 function FormCreate(){
@@ -61,34 +61,40 @@ function Timer1Timer(){
 		var X = Coords[i][0] - 25 + 50 * Math.random();
 		var Y = Coords[i][1] - 25 + 50 * Math.random();
 		var myIndex = i;
+		// Проверка на столкновения персонажей. Сверяем, пересекается ли хотя-бы одна из 4 точек с областью другого персонажа.
 		for (var k = 0; k < Coords.length; k++){
-			
-			if (k != myIndex){
+			if (k != myIndex){ // Чтобы не сверять на столкновение с самим собой.
 				var enemyX = Coords[k][0];
 				var enemyY = Coords[k][1];
 				if (
-					(X > enemyX && X < enemyX + 50 && Y > enemyY && Y < enemyY + 54) ||
-					(X + 50 > enemyX && X + 50 < enemyX + 50 && Y > enemyY && Y < enemyY + 54) ||
-					(X > enemyX && X < enemyX + 50 && Y + 54 > enemyY && Y + 54 < enemyY + 54) ||
-					(X + 50 > enemyX && X + 50 < enemyX + 50 && Y + 54 > enemyY && Y + 54 < enemyY + 54)
+					(X > enemyX && X < enemyX + 50 && Y > enemyY && Y < enemyY + 54) || // Входит ли левый верхний угол в границы другого персонажа?
+					(X + 50 > enemyX && X + 50 < enemyX + 50 && Y > enemyY && Y < enemyY + 54) || // Входит ли правый верхний угол в границы другого персонажа?
+					(X > enemyX && X < enemyX + 50 && Y + 54 > enemyY && Y + 54 < enemyY + 54) || // Входит ли левый нижний угол в границы другого персонажа?
+					(X + 50 > enemyX && X + 50 < enemyX + 50 && Y + 54 > enemyY && Y + 54 < enemyY + 54) // Входит ли правый нижний угол в границы другого персонажа?
 					){
 					check = false;
 				}
 			}
 		}
 		if (check){
+			// Проверка на стены + создается эффект того, что они в них упираются.
+			X = X < 160 ? 160 : X; // С левой стеной
+			X = X > 1750 ? 1750 : X; // С правой стеной (с учетом ширины персонажа)
+			Y = Y > 806 ? 806 : Y; // С нижней стеной (с учетом высоты персонажа)
+			Y = Y < 100 ? 100 : Y; // С верхней стеной
+			// Конец проверки на стены.
 			Coords[i][0] = X;
 			Coords[i][1] = Y;
 		}
 		document.getElementById('Chuvak' + i).style.left = Coords[i][0] + 'px';
 		document.getElementById('Chuvak' + i).style.top = Coords[i][1]  + 'px';
 	};
-	setTimeout('Timer1Timer()', 1000);
+	setTimeout('Timer1Timer()', 300);
 };
 
 </script>
 </head>
-<body onload="FormCreate()">
+<body style="margin: 0;" onload="FormCreate()"> <!-- Убрал margin, чтобы было удобнее -->
 
 	<canvas id="Image1" width="1900" height="960"></canvas>
 	<img id='Chuvak0' src="img/chell_s_pistolem.gif" style="position: absolute; left: 550px;  top: 240px; width: 50px; height: 54px">
