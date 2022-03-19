@@ -31,7 +31,7 @@ function Button1Click(){
 
 	};
 
-function Steni(){
+function walls(){
 	
 	Rectangle(50,860,1800,100, 112,80,46, 112,80,46);
 	Rectangle(1800,0,110,960, 112,80,46, 112,80,46);
@@ -44,14 +44,14 @@ function Steni(){
 	Rectangle(0,500,160,50, 112,80,46, 112,80,46);
 	};
 
-function Pol(){
+function floor(){
 	Rectangle(160,100,1640,760, 179, 179, 255, 179, 179, 255);
 	Rectangle(0,400,160,100, 179, 179, 255, 179, 179, 255);
 	};
 
  function FormCreate(){
-	Steni();
-	Pol();
+	walls();
+	floor();
 	Timer1Timer();
 	};
 
