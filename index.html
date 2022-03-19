@@ -7,7 +7,7 @@
 
 Coords = [
 	[550, 240],
-	[600, 294],
+	[600, 240],
 	[430, 580],
 	[760, 170],
 	[1500, 500],
@@ -49,32 +49,41 @@ function floor(){
 	Rectangle(0,400,160,100, 179, 179, 255, 179, 179, 255);
 	};
 
- function FormCreate(){
+function FormCreate(){
 	walls();
 	floor();
 	Timer1Timer();
 	};
 
 function Timer1Timer(){
-	var X, Y, xStart, xEnd, yStart, yEnd;
 	for (var i = 0; i < Coords.length; i++){
-		X = - 25 + 50 * Math.random();
-		Y = - 25 + 50 * Math.random();
+		var check = true;
+		var X = Coords[i][0] - 25 + 50 * Math.random();
+		var Y = Coords[i][1] - 25 + 50 * Math.random();
+		var myIndex = i;
 		for (var k = 0; k < Coords.length; k++){
-			xStart = Coords[k][0];
-			xEnd = Coords[k][0] + 50;
-			yStart = Coords[k][1];
-			yEnd = Coords[k][1] + 54;
-			if ((xStart > X > xEnd && yStart > Y > yEnd) || (xStart > X + 50 > xEnd && yStart > Y + 54 > yEnd)){
-				console.log("СТОЛКНОВЕНИЕ");
+			
+			if (k != myIndex){
+				var enemyX = Coords[k][0];
+				var enemyY = Coords[k][1];
+				if (
+					(X > enemyX && X < enemyX + 50 && Y > enemyY && Y < enemyY + 54) ||
+					(X + 50 > enemyX && X + 50 < enemyX + 50 && Y > enemyY && Y < enemyY + 54) ||
+					(X > enemyX && X < enemyX + 50 && Y + 54 > enemyY && Y + 54 < enemyY + 54) ||
+					(X + 50 > enemyX && X + 50 < enemyX + 50 && Y + 54 > enemyY && Y + 54 < enemyY + 54)
+					){
+					check = false;
+				}
 			}
 		}
-		Coords[i][0] = Coords[i][0] + X;
-		Coords[i][1] = Coords[i][1] + Y;
+		if (check){
+			Coords[i][0] = X;
+			Coords[i][1] = Y;
+		}
 		document.getElementById('Chuvak' + i).style.left = Coords[i][0] + 'px';
-		document.getElementById('Chuvak' + i).style.top = Coords[i][1]  + 'px' ;
+		document.getElementById('Chuvak' + i).style.top = Coords[i][1]  + 'px';
 	};
-	setTimeout('Timer1Timer()', 100);
+	setTimeout('Timer1Timer()', 1000);
 };
 
 </script>
